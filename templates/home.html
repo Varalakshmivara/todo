@@ -38,9 +38,10 @@
         <p class="text-muted">{% now "jS F Y" %}</p>
         <div class="col-md-7 col-lg-7" style="height: 450px; overflow: scroll">
           <!-- List of all the tasks for the day -->
+          {% for ta in tasks%}
           <div class="card m-1">
             <div class="card-body">
-              This is some Task
+              {{ta.task}}
               <span style="position: relative; float: right">
                 <a class="btn btn-success"
                   ><i class="fa fa-check"></i> Mark as Done</a
@@ -50,6 +51,7 @@
               </span>
             </div>
           </div>
+          {% endfor %}
         </div>
         <div class="col-md-5 col-lg-5">
           <h5>Completed Tasks</h5>
@@ -65,15 +67,21 @@
           style="position: absolute; bottom: 50px"
         >
           <!-- To Do Form -->
-          <form action="">
+          <form action="{% url 'addTask' %}" method="POST">
+            {% csrf_token %}
             <div class="form-group">
               <span style="display: flex">
                 <input
                   type="text"
+                  name="task"
                   class="form-control"
                   placeholder="Add a task"
                 />
-                <button class="btn btn-primary" style="width: 200px">
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  style="width: 200px"
+                >
                   <i class="fa fa-plus"></i> Add
                 </button>
               </span>
